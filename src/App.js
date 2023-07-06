@@ -2,14 +2,24 @@ import { useState } from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
 import Movie from "./components/Movie";
 import FavMovie from "./components/FavMovie";
+import { movies } from "./movies";
+import { useDispatch, useSelector } from "react-redux";
+import { passFilm } from "./actions/movieAct";
+import { addFavorite } from "./actions/favMoviesAct";
 
 function App() {
-  const [sira, setSira] = useState(0);
-  const favMovies = [];
-
+  const sira = useSelector(store=>store.mo.sira);
+  const dispatch=useDispatch();
+const favMovies=useSelector(store=>store.mo.favMovies)
   function sonrakiFilm() {
-    setSira(sira + 1);
+
+    dispatch(passFilm(sira))
   }
+
+  function favList(){
+    dispatch(addFavorite(sira))
+  }
+  
 
   return (
     <div className="wrapper max-w-2xl mx-auto">
@@ -23,7 +33,7 @@ function App() {
       </nav>
       <Switch>
         <Route exact path="/">
-          <Movie sira={sira} />
+          <Movie  />
 
           <div className="flex gap-3 justify-end py-3">
             <button
@@ -32,18 +42,17 @@ function App() {
             >
               Sıradaki
             </button>
-            <button className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white">
+            <button
+            onClick={favList}
+             className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white">
               Listeme ekle
             </button>
           </div>
         </Route>
 
         <Route path="/listem">
-          <div>
-            {favMovies.map((movie) => (
-              <FavMovie key={movie.id} title={movie.title} id={movie.id} />
-            ))}
-          </div>
+        <FavMovie    />
+
         </Route>
       </Switch>
     </div>
