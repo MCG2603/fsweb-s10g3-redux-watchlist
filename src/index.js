@@ -9,8 +9,12 @@ import { BrowserRouter } from "react-router-dom"
 import { legacy_createStore as createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducer/indexReducer';
+import { applyMiddleware } from 'redux';
 
-const store=createStore(reducer);
+// Logger with default options
+import logger from 'redux-logger'
+
+const store=createStore(reducer,applyMiddleware(logger));
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>

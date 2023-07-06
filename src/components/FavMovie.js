@@ -5,7 +5,6 @@ export default function FavMovie({ title, id }) {
   const favMovies=useSelector(store=>store.mo.favMovies)
   const dispatch=useDispatch();
   function removeList(e){
-    console.log(e.target.value)
     dispatch(removeFavorite(e.target.value))
   }
   return (
